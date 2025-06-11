@@ -1,0 +1,40 @@
+@hostname = http://127.0.0.1
+@port = 8001
+@host = {{hostname}}:{{port}}
+@JSONcontentType = application/json
+@AdminUSERNAME = "admin"
+@AdminPASSWORD = "123456"
+
+@TokenPrefix = Bearer
+
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NjYxMjc4LCJpYXQiOjE3NDk2NTQ5NzgsImp0aSI6IjZkOTI2OGNmZDZjMDRjZGNhYmMwZDZjZjc3MmJkY2IyIiwidXNlcl9pZCI6MX0.ImvtxOKRshS2FooF59vX2bCNwu0Mp6ae33FeqWxbZm0
+
+POST {{host}}/api/token/
+content-type: {{JSONcontentType}}
+
+{
+    "username": {{AdminUSERNAME}},
+    "password": {{AdminPASSWORD}}
+}
+
+
+###
+
+
+GET {{host}}/groups/ HTTP/1.1
+content-type: {{JSONcontentType}}
+Authorization: {{TokenPrefix}} {{TOKEN}}
+
+###
+
+GET {{host}}/users/ HTTP/1.1
+content-type: {{JSONcontentType}}
+Authorization: {{TokenPrefix}} {{TOKEN}}
+
+
+###
+
+
+GET http://127.0.0.1:8002/polls/ HTTP/1.1
+content-type: {{JSONcontentType}}
+Authorization: {{TokenPrefix}} {{TOKEN}}
